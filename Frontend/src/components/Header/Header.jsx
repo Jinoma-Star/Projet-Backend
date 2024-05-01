@@ -5,7 +5,7 @@ import * as PropTypes from 'prop-types';
 import styles from './Header.module.css';
 import Logo from '../../images/Logo.png';
 
-function Header({ user = null, setUser }) {
+function Header({ user, setUser }) {
   const navigate = useNavigate();
   const disconnect = () => {
     localStorage.clear();
@@ -35,4 +35,7 @@ Header.propTypes = {
   setUser: PropTypes.func.isRequired,
 };
 
+Header.defaultProps = {
+  user: null,
+};
 export default Header;

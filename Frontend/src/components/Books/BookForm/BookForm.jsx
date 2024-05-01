@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import React, { useEffect, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import * as PropTypes from 'prop-types';
@@ -8,10 +9,10 @@ import addFileIMG from '../../../images/add_file.png';
 import styles from './BookForm.module.css';
 import { updateBook, addBook } from '../../../lib/common';
 
-function BookForm({ book = null, validate = () => {} }) {
+function BookForm({ book, validate }) {
   const userRating = book ? book.ratings.find((elt) => elt.userId === localStorage.getItem('userId'))?.grade : 0;
 
-  const [rating, setRating] = useState(userRating || 0);
+  const [rating, setRating] = useState(0);
 
   const navigate = useNavigate();
   const {
@@ -24,11 +25,9 @@ function BookForm({ book = null, validate = () => {} }) {
       genre: book?.genre,
     }), [book]),
   });
-  
   useEffect(() => {
     reset(book);
   }, [book]);
-  
   const file = watch(['file']);
   const [filePreview] = useFilePreview(file);
 
@@ -51,7 +50,9 @@ function BookForm({ book = null, validate = () => {} }) {
         alert('Vous devez ajouter une image');
       }
       if (!data.rating) {
+        /* eslint-disable no-param-reassign */
         data.rating = 0;
+        /* eslint-enable no-param-reassign */
       }
       const newBook = await addBook(data);
       if (!newBook.error) {
@@ -109,6 +110,7 @@ function BookForm({ book = null, validate = () => {} }) {
               <p>Ajouter une image</p>
             </>
           )}
+
         </div>
         <input {...register('file')} type="file" id="file" />
       </label>
@@ -136,4 +138,8 @@ BookForm.propTypes = {
   validate: PropTypes.func,
 };
 
+BookForm.defaultProps = {
+  book: null,
+  validate: null,
+};
 export default BookForm;
