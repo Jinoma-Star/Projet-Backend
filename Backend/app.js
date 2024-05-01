@@ -5,7 +5,7 @@ const userRoutes = require('./routes/user');
 const path = require('path');
 const password = require('./utils/password')
 
-mongoose.connect(`mongodb+srv://NewUser:${password}@cluster0.8u1emul.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`)
+mongoose.connect(`mongodb+srv://NewUser:${password}@cluster0.8u1emul.mongodb.net/`)
   .then(() => console.log('Connexion à MongoDB réussie !'))
   .catch(() => console.log('Connexion à MongoDB échouée !'));
 
