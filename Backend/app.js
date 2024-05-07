@@ -3,9 +3,13 @@ const mongoose = require('mongoose');
 const booksRoutes = require('./routes/books');
 const userRoutes = require('./routes/user');
 const path = require('path');
-const password = require('./utils/password')
 
-mongoose.connect(`mongodb+srv://NewUser:${password}@cluster0.8u1emul.mongodb.net/`)
+//Chargement de la var. environment
+require('dotenv').config({ path: 'connect.env' });
+
+//Chaîne de connexion utilisant la var. environment
+const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}`;
+mongoose.connect(uri)
   .then(() => console.log('Connexion à MongoDB réussie !'))
   .catch(() => console.log('Connexion à MongoDB échouée !'));
 
